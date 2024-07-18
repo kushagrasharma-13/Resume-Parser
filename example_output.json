@@ -1,0 +1,53 @@
+{
+    "Contact Information": {
+      "Phone": "+91 9557469354",
+      "Email": "kushagra.sharma_cs.aiml21@gla.ac.in",
+      "LinkedIn": "linkedin.com/in/kush",
+      "GitHub": "Not Provided"
+    },
+    "Professional Experience": [
+      "Medical Image Diagnosis App  | Python , Keras , OpenCV , Streamlit , MongoDB",
+      "- Deployed a Streamlit web application with user registration and login functionalities. The application efficiently detects mo re than",
+      "2 types of diseases with over 90% accuracy, significantly improving health monitoring.",
+      "- Utilized a Keras model capable of accurately classifying brain diseases into 4 distinct types, thereby enhancing the",
+      "application's diagnostic capabilities for neurological conditions.",
+      "Medical Remedy App  | Python , Streamlit , Autogen, GroqAI",
+      "- Deployed a Streamlit web application with user registration and login functionalities. The application efficiently detects mo re than",
+      "2 types of diseases with over 90% accuracy, significantly improving health monitoring.",
+      "- Developed custom agents using the Autogen framework; integrated a high -performance LLM (llama3 -8b-8192) that processes",
+      "over 200 user queries per minute, enhancing the accuracy and relevance of the recommendations."
+    ],
+    "Projects": [
+      "Patent RAG QA App  | Python , Lanchain , Qdrant, AWS , Docker",
+      "- Developed a Qdrant -based vector database, that forms sentence embeddings from over 1000 chunks. This innovative approach",
+      "enables highly nuanced and contextually rich representations, enhancing accuracy.",
+      "- Engineered a cutting -edge web interface with Fast API , enabling seamless query input and real -time response retrieval; enhanced"
+    ],
+    "Skills": [
+      "Technical",
+      "Python",
+      "NumPy, Pandas, Fast API",
+      "Machine Learning, NLP",
+      "Django, Langchain, Keras",
+      "AWS, Azure , Docker  Professional",
+      "Adaptability",
+      "Competent",
+      "Spearheade d"
+    ],
+    "Education": [
+      "B.Tech  in Computer Science  (AI & ML) , GLA University, Mathura - CGPA: 8. 6                                                            Expected 2025",
+      "Intermediate, St. Mary's Convent School (ICSE) - 84.4%   2019 -2021",
+      "High School, St. Mary's Convent School (ICSE) - 83.3%   2017 -2019",
+      "INTERNSHIP/CERTIFICATES",
+      "AI and Backend Intern , StoryVord , London                                                                                                                  May 2024 - Present",
+      "- Developed multiple AI bots that performs various works for gathering and forming required details for a Film Production.",
+      "- Integrated Backend using Django and formed logics for endpoints , deployed on  Azure Cloud using App Service.",
+      "Job Oriented Value -Added Course, GLA University, Mathura                                                                               June 2023 - Aug 2023",
+      "- Learned basics of Amazon Web Services, Docker and Cloud Computing."
+    ],
+    "Achievements": [
+      "- SIH 2023:  Proposed and developed a Human Detection System, showcasing innovative problem -solving at the national -level",
+      "Smart India Hackathon 2023."
+    ],
+    "Extra-Curricular Activities": []
+  }
