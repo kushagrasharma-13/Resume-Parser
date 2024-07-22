@@ -1,53 +1,74 @@
 {
-    "Contact Information": {
-      "Phone": "+91 9557469354",
-      "Email": "kushagra.sharma_cs.aiml21@gla.ac.in",
-      "LinkedIn": "linkedin.com/in/kush",
-      "GitHub": "Not Provided"
+  "Contact Information": {
+    "Email": "sharmakushagra295@gmail.com",
+    "Phone": "+91 9557489354",
+    "LinkedIn": "",
+    "GitHub": ""
+  },
+  "Professional Experience": [
+    {
+      "Company": "StoryVord, London",
+      "Position": "AI and Backend Intern",
+      "Duration": "May 2024 - July 2024",
+      "Description": "Implemented over 5 specialized AI bots leveraging LLMs to automate the real-time gathering and organization of film production details, significantly improving collaboration and streamlining project development.\nOrchestrated the integration of key functionalities into the backend using Django, setting up logic for endpoints; streamlined system deployment on Azure Cloud, enhancing scalability and performance by 20%."
+    }
+  ],
+  "Projects": [
+    {
+      "Name": "RAG Patent Q&A",
+      "Description": "Innovated a Qdrant-based vector database, forming sentence embeddings from over 1000 chunks, enabling highly nuanced and contextually rich representations to enhance accuracy and efficiency.\nDeveloped a web interface with FastAPI, facilitating seamless query input and instant response retrieval, improving user experience, and providing contextually relevant answers, increasing user satisfaction by 40%. Uploaded the database image to Docker Hub for seamless deployment and securely hosted it on AWS, ensuring robust scalability, high availability, and enhanced security for our application. Check Out",
+      "Tech Used": "Pythons, Keras, Qdrant, Langchain, GroqAI, FastAPI"
     },
-    "Professional Experience": [
-      "Medical Image Diagnosis App  | Python , Keras , OpenCV , Streamlit , MongoDB",
-      "- Deployed a Streamlit web application with user registration and login functionalities. The application efficiently detects mo re than",
-      "2 types of diseases with over 90% accuracy, significantly improving health monitoring.",
-      "- Utilized a Keras model capable of accurately classifying brain diseases into 4 distinct types, thereby enhancing the",
-      "application's diagnostic capabilities for neurological conditions.",
-      "Medical Remedy App  | Python , Streamlit , Autogen, GroqAI",
-      "- Deployed a Streamlit web application with user registration and login functionalities. The application efficiently detects mo re than",
-      "2 types of diseases with over 90% accuracy, significantly improving health monitoring.",
-      "- Developed custom agents using the Autogen framework; integrated a high -performance LLM (llama3 -8b-8192) that processes",
-      "over 200 user queries per minute, enhancing the accuracy and relevance of the recommendations."
-    ],
-    "Projects": [
-      "Patent RAG QA App  | Python , Lanchain , Qdrant, AWS , Docker",
-      "- Developed a Qdrant -based vector database, that forms sentence embeddings from over 1000 chunks. This innovative approach",
-      "enables highly nuanced and contextually rich representations, enhancing accuracy.",
-      "- Engineered a cutting -edge web interface with Fast API , enabling seamless query input and real -time response retrieval; enhanced"
-    ],
-    "Skills": [
-      "Technical",
-      "Python",
-      "NumPy, Pandas, Fast API",
-      "Machine Learning, NLP",
-      "Django, Langchain, Keras",
-      "AWS, Azure , Docker  Professional",
-      "Adaptability",
-      "Competent",
-      "Spearheade d"
-    ],
-    "Education": [
-      "B.Tech  in Computer Science  (AI & ML) , GLA University, Mathura - CGPA: 8. 6                                                            Expected 2025",
-      "Intermediate, St. Mary's Convent School (ICSE) - 84.4%   2019 -2021",
-      "High School, St. Mary's Convent School (ICSE) - 83.3%   2017 -2019",
-      "INTERNSHIP/CERTIFICATES",
-      "AI and Backend Intern , StoryVord , London                                                                                                                  May 2024 - Present",
-      "- Developed multiple AI bots that performs various works for gathering and forming required details for a Film Production.",
-      "- Integrated Backend using Django and formed logics for endpoints , deployed on  Azure Cloud using App Service.",
-      "Job Oriented Value -Added Course, GLA University, Mathura                                                                               June 2023 - Aug 2023",
-      "- Learned basics of Amazon Web Services, Docker and Cloud Computing."
-    ],
-    "Achievements": [
-      "- SIH 2023:  Proposed and developed a Human Detection System, showcasing innovative problem -solving at the national -level",
-      "Smart India Hackathon 2023."
-    ],
-    "Extra-Curricular Activities": []
-  }
+    {
+      "Name": "Brain Disease Detection",
+      "Description": "Established a Streamlit web application with user registration and login functionalities, efficiently detecting over 2 types of brain diseases with over 90% accuracy, significantly improving health monitoring.\nUtilized a Keras model capable of accurately classifying brain diseases into 4 distinct types, thereby enhancing the application's diagnostic capabilities for neurological conditions. Check Out",
+      "Tech Used": "Pythons, Keras, Streamlit, MongoDB"
+    },
+    {
+      "Name": "Incorrect Package Dimensions Detection",
+      "Description": "Designed and Devised a data-driven algorithm to detect package inaccuracies based on 5 metrics.\nThis optimization resulted in a 15% reduction in shipping costs and a 25% increase in operational efficiency.",
+      "Tech Used": "Pythons, Numpy, Pandas"
+    }
+  ],
+  "Skills": [
+    "Programming Expertise: Python, Java",
+    "Technical Proficiency: ML, DL, NLP, Data Analysis & Visualization, Predictive & Statistical Modeling",
+    "Frameworks & Libraries: TensorFlow, Keras, Scikit-learn, NumPy, Pandas, Streamlit",
+    "Others: Django, SQL, MongoDB, AWS, Docker, GroqAI, Tableau",
+    "Miscellaneous: Leadership, Competent, Receptive, Dynamic"
+  ],
+  "Education": [
+    {
+      "University": "GLA University",
+      "Degree": "B.Tech in Computer Science & Engineering: Specializing in AI and ML",
+      "Duration": "Sep 2021 - Present",
+      "CPI": "8.6/10"
+    },
+    {
+      "University": "St. Mary's Convent School",
+      "Degree": "Intermediate (12th) : Science (PCM) with Computer Science",
+      "Duration": "May 2019 - April 2021",
+      "Percentage": "84.4%"
+    }
+  ],
+  "Achievements": [
+    {
+      "Name": "SIH 2023",
+      "Description": "Proposed a Human detection system in the prestigious national-level SIH 2023.",
+      "Check Out": ""
+    },
+    {
+      "Name": "SIH @GLA University",
+      "Description": "Led a 6-member cross-functional team into victory in a hackathon, developing software capable of performing over 3 distinct tasks, showcasing our expertise and teamwork.",
+      "Check Out": ""
+    },
+    {
+      "Name": "IAA, IIT",
+      "Description": "Top 1% position in the Analysis and Algorithm course at IIT Kharagpur.",
+      "Check Out": ""
+    }
+  ],
+  "Extra-Curricular Activities": [
+    "Volunteered for 1 year teaching village students at Udaaan Asman Tak NGO, GLA University."
+  ]
+}

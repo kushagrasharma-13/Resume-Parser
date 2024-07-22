@@ -1,7 +1,46 @@
-import re
-from utils import extract_text_from_pdf
+import json
+import os
 import streamlit as st
+from dotenv import load_dotenv
+from autogen import AssistantAgent, UserProxyAgent
+from utils import extract_text_from_pdf
 
+load_dotenv()
+
+class ResumeParsingAgent(AssistantAgent):
+    def __init__(self, name="resume_parsing_agent", llm_config=None):
+        system_message = (
+            "You are an AI specialized in extracting and organizing information from resumes. "
+            "Please analyze the provided resume text and return the information in a structured JSON format with the following sections:\n"
+            "1. Contact Information\n"
+            "2. Professional Experience\n"
+            "3. Projects\n"
+            "4. Skills\n"
+            "5. Education\n"
+            "6. Achievements\n"
+            "7. Extra-Curricular Activities\n"
+
+            "The output must contain only the JSON file and no other comments or data"
+        )
+        super().__init__(name=name, system_message=system_message, llm_config=llm_config)
+
+class ResumeUserProxyAgent(UserProxyAgent):
+    def __init__(self, name="user_proxy", llm_config=None):
+        super().__init__(name=name, llm_config=llm_config, human_input_mode="NEVER", max_consecutive_auto_reply=0, code_execution_config=False)
+
+GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
+llm_config = {
+    "model": "llama3-8b-8192",
+    "api_key": GROQ_API_KEY,
+    "api_type": "groq",
+    "base_url": "https://api.groq.com/openai/v1",
+}
+
+# Initialize the Resume Parsing Assistant Agent
+resume_parsing_agent = ResumeParsingAgent(llm_config=llm_config)
+resume_user_proxy = ResumeUserProxyAgent(llm_config=llm_config)
+
+# Function to clean text
 def clean_text(text):
     replacements = {
         '\u2013': '-',
@@ -15,82 +54,50 @@ def clean_text(text):
         text = text.replace(key, value)
     return text
 
-def extract_contact_info(line, resume_json):
-    phone_number_pattern = re.compile(r'\+?\d[\d\s\-]+\d')
-    email_pattern = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
-    linkedin_pattern = re.compile(r'(linkedin.com/in/[A-Za-z0-9-_]+)', re.IGNORECASE)
-    github_pattern = re.compile(r'(github.com/[A-Za-z0-9-_]+)', re.IGNORECASE)
+def preprocess_resume_text(resume_text):
+    cleaned_text = clean_text(resume_text)
+    lines = cleaned_text.split('\n')
+    processed_lines = [line.strip() for line in lines if line.strip()]
+    return '\n'.join(processed_lines)
 
-    contact_lines = re.split(r'\s*[—-]\s*|\s*\|\|\s*|\s*,\s*', line)
-    for item in contact_lines:
-        item = item.strip()
-        if not item:
-            continue
-        if "Email" not in resume_json["Contact Information"] and email_pattern.search(item):
-            resume_json["Contact Information"]["Email"] = email_pattern.search(item).group()
-        elif "Phone" not in resume_json["Contact Information"] and phone_number_pattern.search(item):
-            resume_json["Contact Information"]["Phone"] = phone_number_pattern.search(item).group()
-        elif "LinkedIn" not in resume_json["Contact Information"] and linkedin_pattern.search(item):
-            resume_json["Contact Information"]["LinkedIn"] = linkedin_pattern.search(item).group()
-        elif "GitHub" not in resume_json["Contact Information"] and github_pattern.search(item):
-            resume_json["Contact Information"]["GitHub"] = github_pattern.search(item).group()
+def postprocess_parsed_resume(parsed_resume):
+    parsed_resume_json = json.loads(parsed_resume)
 
-def parse_resume(resume_text):
-    resume_json = {
-        "Contact Information": {},
-        "Professional Experience": [],
-        "Projects": [],
-        "Skills": [],
-        "Education": [],
-        "Achievements": [],
-        "Extra-Curricular Activities": []
-    }
+    if "Contact Information" not in parsed_resume_json:
+        parsed_resume_json["Contact Information"] = {}
+    contact_info_defaults = {"Email": "Not Provided", "Phone": "Not Provided", "LinkedIn": "Not Provided", "GitHub": "Not Provided"}
+    parsed_resume_json["Contact Information"] = {**contact_info_defaults, **parsed_resume_json["Contact Information"]}
+    return parsed_resume_json
 
-    section_keywords = {
-        "Contact Information": ["Contact Information", "Contact Info", "Contact"],
-        "Professional Experience": ["Professional Experience", "Work Experience", "Experience"],
-        "Projects": ["Projects", "Project"],
-        "Skills": ["Skills", "Technical Skills"],
-        "Education": ["Education", "Academic Background"],
-        "Achievements": ["Achievements", "Awards", "Honors"],
-        "Extra-Curricular Activities": ["Extra-Curricular Activities", "Extracurricular Activities", "Activities", "Volunteer Experience"]
-    }
-
-    contact_info_patterns = ["@", "linkedin", "github", "phone", "+91"]
-    section = None
-
-    lines = resume_text.split('\n')
-    for line in lines:
-        line = clean_text(line.strip())
-        if not line:
-            continue
-
-        section_detected = False
-        for key, keywords in section_keywords.items():
-            if any(keyword.lower() in line.lower() for keyword in keywords):
-                section = key
-                section_detected = True
-                break
-
-        if section_detected:
-            continue
-
-        if section == "Contact Information" or any(pattern in line.lower() for pattern in contact_info_patterns):
-            section = "Contact Information"
-            extract_contact_info(line, resume_json)
-        elif section and section != "Contact Information":
-            resume_json[section].append(line)
-
-    if "Phone" not in resume_json["Contact Information"]:
-        resume_json["Contact Information"]["Phone"] = "Not Provided"
-    if "Email" not in resume_json["Contact Information"]:
-        resume_json["Contact Information"]["Email"] = "Not Provided"
-    if "LinkedIn" not in resume_json["Contact Information"]:
-        resume_json["Contact Information"]["LinkedIn"] = "Not Provided"
-    if "GitHub" not in resume_json["Contact Information"]:
-        resume_json["Contact Information"]["GitHub"] = "Not Provided"
-
-    return resume_json
+def parse_resume_single_call(resume_text):
+    prompt = (
+        "Please analyze the provided resume text and return the information in a structured JSON format with the following sections:\n"
+        "1. Contact Information\n"
+        "2. Professional Experience\n"
+        "3. Projects\n"
+        "4. Skills\n"
+        "5. Education\n"
+        "6. Achievements\n"
+        "7. Extra-Curricular Activities\n\n"
+        "Resume Text:\n"
+        f"{resume_text}\n\n"
+        "Return the extracted information in the following JSON format:\n"
+        "{\n"
+        "  'Contact Information': { 'Email': '', 'Phone': '', 'LinkedIn': '', 'GitHub': '' },\n"
+        "  'Professional Experience': [],\n"
+        "  'Projects': [],\n"
+        "  'Skills': [],\n"
+        "  'Education': [],\n"
+        "  'Achievements': [],\n"
+        "  'Extra-Curricular Activities': []\n"
+        "}"
+    )
+    
+    response = resume_user_proxy.initiate_chat(resume_parsing_agent, message=prompt)
+    print("#######################################################")
+    print(response.chat_history[-1]["content"].strip())
+    print("#######################################################")
+    return response.chat_history[-1]["content"].strip()
 
 st.title("Resume Parser to JSON")
 
@@ -105,6 +112,10 @@ else:
         resume_text = extract_text_from_pdf(file)
     file_name = default_file_path
 
-parsed_resume = parse_resume(resume_text)
+preprocessed_resume_text = preprocess_resume_text(resume_text)
+raw_parsed_resume = parse_resume_single_call(preprocessed_resume_text)
+parsed_resume = postprocess_parsed_resume(raw_parsed_resume)
+
 st.text(f"Currently using file: {file_name}")
+print(parsed_resume)
 st.json(parsed_resume)
